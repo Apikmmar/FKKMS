@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManageUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/main', function () {
-    return view('ManageUser/Login');
-});
+// Show login form
+Route::get('/login', [ManageUserController::class, 'showLoginForm'])->name('login');
 
-Route::get('/register', function () {
-    return view('ManageUser/Register');
-});
+// Handle login form submission
+Route::post('/login', [ManageUserController::class, 'login'])->name('login.submit');
+
+// create new user
+Route::get('/register', [ManageUserController::class, 'create']);
+Route::post('/register', [ManageUserController::class, 'createNewUser']);
